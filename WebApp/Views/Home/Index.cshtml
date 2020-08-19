@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model WebApp.ViewModels.ShowItemsVM
+
+@{
+    ViewData["Title"] = "Bacchus";
+}
+@Html.ValidationMessage("message", new {@class = "text-danger"})
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <form asp-controller="Home" asp-action="Index" class="form-inline" method="get">
+            <div class="form-group">
+                <select asp-for="Category" class="form-control" asp-items="Model.CategorySelectList">
+                    <option selected value="">All Categories</option>
+                </select>
+            </div>
+            <input asp-for="Search" class="form-control mr-sm-2" type="text" placeholder="Search...">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            @if (!string.IsNullOrEmpty(Model.Search) || !string.IsNullOrEmpty(Model.Category))
+            {
+                <div>
+                    <a asp-controller="Home" asp-action="Index">Back to full list</a>
+                </div>
+            }
+        </form>
+
+    </div>
+</nav>
+
+<div class="row">
+    @foreach (var item in Model.Items!)
+    {
+        <div class="col-lg-3 col-md-4 col-sm 6 col-xs-12">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">
+                    <div class="font-weight-bold">@Html.DisplayFor(modelItem => item.ItemName)</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <b>Description:</b> @Html.DisplayFor(modelItem => item.ItemDescription)
+                    </div>
+                    <div>
+
+                    </div>
+                    <div class="card-text">
+                        <b>Time left:</b> @Html.DisplayFor(modelItem => item.TimeLeft)
+                    </div>
+                    <div class="card-text">
+                        <a class="btn btn-primary" asp-controller="Bids" asp-action="Create" asp-route-id="@item.Id">Make a bet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

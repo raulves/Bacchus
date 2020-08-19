@@ -1,0 +1,51 @@
+@using System.Globalization
+@model IEnumerable<WebApp.ViewModels.BetVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-controller="Home" asp-action="Index">Back to items</a>
+</p>
+
+<h1>Bids history</h1>
+<h8>Showing last 5 days bids</h8>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                €@Html.DisplayFor(modelItem => item.BidAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
